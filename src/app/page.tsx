@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import CreateItemModal from "./components/createItemModal";
 import ItemCard from "./components/ItemCard";
+import toast from "react-hot-toast";
 
 interface User {
   id: string;
@@ -30,7 +31,6 @@ export default function Home() {
       setItems(res.data.items);
     } catch (error) {
       console.error("Error fetching item details:", error);
-    } finally {
     }
   };
 
@@ -41,7 +41,7 @@ export default function Home() {
         const res = await axios.get("/api/users/me");
         setUserData(res.data.data);
       } catch (error) {
-        console.log("Error fetching user details:", error);
+        console.error("Error fetching user details:", error);
       }
     };
 
@@ -55,7 +55,6 @@ export default function Home() {
 
   // Callback function to handle item creation
   const handleItemCreated = () => {
-    console.log("Item created");
     fetchItems();
   };
 
@@ -66,35 +65,45 @@ export default function Home() {
       });
 
       if (res.data.success) {
-        console.log("Item deleted:", res.data.item);
+        toast.success("Item deleted successfully");
         fetchItems();
       }
     } catch (error) {
       console.error("Error deleting item:", error);
+      toast.error("Failed to delete item");
     }
   };
 
   return (
     <>
-      {userData && <NavBar userData={userData} show={true} />}
+      {
+        <NavBar
+          userData={userData}
+          setUserData={setUserData}
+          show={userData ? true : false}
+        />
+      }
       <div className="flex justify-center mt-8">
-        {userData && (
+        {userData ? (
           <CreateItemModal
             userId={userData.id}
             onItemCreated={handleItemCreated}
           />
+        ) : (
+          <p className="text-center mt-4">
+            Please log in to create a new item.
+          </p>
         )}
       </div>
       <div className="flex flex-wrap text-center mt-4 w-10/12 mx-auto my-0 justify-center">
-        {userData &&
-          items.map((item) => (
-            <ItemCard
-              key={item.id}
-              item={item}
-              loggedInUserId={userData.id}
-              onDelete={handleDeleteItem}
-            />
-          ))}
+        {items.map((item) => (
+          <ItemCard
+            key={item.id}
+            item={item}
+            loggedInUserId={userData?.id}
+            onDelete={handleDeleteItem}
+          />
+        ))}
       </div>
     </>
   );

@@ -26,13 +26,12 @@ export default function LoginPage() {
     try {
       setLoading(true);
       const response = await axios.post("/api/users/login", user);
-      console.log(response);
 
       toast.success("Login successful");
       router.push("/");
     } catch (error: any) {
-      console.log("Login failed", error);
-      toast.error(error.message);
+      console.error("Login failed", error);
+      toast.error("Invalid email or password");
     } finally {
       setLoading(false);
     }
@@ -48,7 +47,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <NavBar userData={null} show={false} />
+      <NavBar userData={null} setUserData={() => {}} show={false} />
       <Dialog open={true}>
         <DialogContent className="flex flex-col items-center justify-center mt-[8rem] p-4 bg-white rounded-lg ">
           <DialogTitle className="text-4xl mb-4">
@@ -79,7 +78,7 @@ export default function LoginPage() {
           />
 
           <button
-            className="p-2 text-white border border-blue-950 bg-blue-600 hover:bg-blue-800 rounded-lg mb-4 focus:outline-none"
+            className="p-2 text-white border border-blue-950 bg-blue-600 hover:bg-blue-800 rounded-lg mb-4 focus:outline-none cursor-pointer"
             onClick={onLogin}
             disabled={btnDisabled}
           >

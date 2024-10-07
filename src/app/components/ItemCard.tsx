@@ -10,7 +10,7 @@ interface Item {
 
 interface ItemCardProps {
   item: Item;
-  loggedInUserId: string;
+  loggedInUserId?: string;
   onDelete: (itemId: string) => void;
 }
 

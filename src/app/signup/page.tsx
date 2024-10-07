@@ -28,11 +28,11 @@ export default function SignUpPage() {
     try {
       setLoading(true);
       const response = await axios.post("/api/users/signup", user);
-      console.log("Signup success", response.data);
+      toast.success("Signup successful");
       router.push("/login");
     } catch (err: any) {
-      console.log("Signup failed", err.message);
-      toast.error(err.message);
+      console.error("Signup failed", err.message);
+      toast.error("Signup failed");
     } finally {
       setLoading(false);
     }
@@ -52,7 +52,7 @@ export default function SignUpPage() {
 
   return (
     <>
-      <NavBar userData={null} show={false} />
+      <NavBar userData={null} setUserData={() => {}} show={false} />
       <Dialog open={true}>
         <DialogContent className="flex flex-col items-center justify-center mt-[8rem] p-4 bg-white rounded-lg ">
           <DialogTitle className="text-4xl mb-4">
