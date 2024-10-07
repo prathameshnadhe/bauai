@@ -4,7 +4,19 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import toast from "react-hot-toast";
 
-const NavBar = () => {
+interface User {
+  id: string;
+  email: string;
+  name: string;
+}
+
+const NavBar = ({
+  userData,
+  show,
+}: {
+  userData: User | null;
+  show: Boolean;
+}) => {
   const router = useRouter();
   const logout = async () => {
     try {
@@ -20,9 +32,12 @@ const NavBar = () => {
   return (
     <nav className="flex flex-wrap justify-between items-center p-4 px-24 text-2xl">
       <div className="">BAU AI</div>
-      <div>
-        <button onClick={logout}>Logout</button>
-      </div>
+      {show && userData && (
+        <div className="flex flex-wrap items-center">
+          <p className="px-6">{userData.name}</p>
+          <button onClick={logout}>Logout</button>
+        </div>
+      )}
     </nav>
   );
 };

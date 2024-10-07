@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
     const { name, email, password } = reqBody;
@@ -21,7 +21,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // hash password
+    // Hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 

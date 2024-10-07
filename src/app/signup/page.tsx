@@ -11,7 +11,7 @@ import {
   DialogClose,
 } from "@radix-ui/react-dialog";
 import { Label } from "@radix-ui/react-label";
-// import { ThemeProvider } from "@radix-ui/theme";
+import NavBar from "../components/navbar";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -51,62 +51,65 @@ export default function SignUpPage() {
   }, [user]);
 
   return (
-    <Dialog open={true}>
-      <DialogContent className="flex flex-col items-center justify-center min-h-screen p-4 bg-white rounded-lg shadow-lg">
-        <DialogTitle className="text-4xl mb-4">
-          {loading ? "Processing..." : "Signup"}
-        </DialogTitle>
-        <hr />
-        <Label htmlFor="name" className="mb-2">
-          Name
-        </Label>
-        <input
-          type="text"
-          className="p-2 text-black border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
-          id="name"
-          value={user.name}
-          onChange={(e) => setUser({ ...user, name: e.target.value })}
-          placeholder="Name"
-        />
-        <Label htmlFor="email" className="mb-2">
-          Email
-        </Label>
-        <input
-          type="email"
-          className="p-2 text-black border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
-          id="email"
-          value={user.email}
-          onChange={(e) => setUser({ ...user, email: e.target.value })}
-          placeholder="Email"
-        />
-        <Label htmlFor="password" className="mb-2">
-          Password
-        </Label>
-        <input
-          type="password"
-          className="p-2 text-black border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
-          id="password"
-          value={user.password}
-          onChange={(e) => setUser({ ...user, password: e.target.value })}
-          placeholder="Password"
-        />
+    <>
+      <NavBar userData={null} show={false} />
+      <Dialog open={true}>
+        <DialogContent className="flex flex-col items-center justify-center mt-[8rem] p-4 bg-white rounded-lg ">
+          <DialogTitle className="text-4xl mb-4">
+            {loading ? "Processing..." : "Signup"}
+          </DialogTitle>
+          <hr />
+          <Label htmlFor="name" className="mb-2">
+            Name
+          </Label>
+          <input
+            type="text"
+            className="p-2 text-black border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
+            id="name"
+            value={user.name}
+            onChange={(e) => setUser({ ...user, name: e.target.value })}
+            placeholder="Name"
+          />
+          <Label htmlFor="email" className="mb-2">
+            Email
+          </Label>
+          <input
+            type="email"
+            className="p-2 text-black border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
+            id="email"
+            value={user.email}
+            onChange={(e) => setUser({ ...user, email: e.target.value })}
+            placeholder="Email"
+          />
+          <Label htmlFor="password" className="mb-2">
+            Password
+          </Label>
+          <input
+            type="password"
+            className="p-2 text-black border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
+            id="password"
+            value={user.password}
+            onChange={(e) => setUser({ ...user, password: e.target.value })}
+            placeholder="Password"
+          />
 
-        <button
-          className="p-2 cursor-pointer text-white border border-blue-950 bg-blue-600 hover:bg-blue-800 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
-          onClick={onSignup}
-          disabled={btnDisabled}
-        >
-          Sign Up
-        </button>
-        <DialogClose asChild>
-          <div>
-            Do you have an account?{" "}
-            <Link href="/login" className="text-blue-700">
-              Login
-            </Link>
-          </div>
-        </DialogClose>
-      </DialogContent>
-    </Dialog>
+          <button
+            className="p-2 cursor-pointer text-white border border-blue-950 bg-blue-600 hover:bg-blue-800 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
+            onClick={onSignup}
+            disabled={btnDisabled}
+          >
+            Sign Up
+          </button>
+          <DialogClose asChild>
+            <div>
+              Do you have an account?{" "}
+              <Link href="/login" className="text-blue-700">
+                Login
+              </Link>
+            </div>
+          </DialogClose>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
