@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import ConfirmationModal from "./ConfirmationModal"; // Adjust the import path as needed
 
 interface Item {
   id: string;
@@ -20,6 +21,11 @@ const ItemCard: React.FC<ItemCardProps> = ({
   onDelete,
 }) => {
   const { title, description, userId } = item;
+  const [open, setOpen] = useState(false);
+
+  const handleDelete = () => {
+    onDelete(item.id);
+  };
 
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg m-4 bg-white">
@@ -31,12 +37,19 @@ const ItemCard: React.FC<ItemCardProps> = ({
         {loggedInUserId === userId && (
           <button
             className="bg-red-500 text-white px-2 py-1 rounded-md mt-2"
-            onClick={() => onDelete(item.id)}
+            onClick={() => setOpen(true)}
           >
             Delete
           </button>
         )}
       </div>
+
+      {/* Use the Confirmation Modal */}
+      <ConfirmationModal
+        open={open}
+        onOpenChange={setOpen}
+        onConfirm={handleDelete}
+      />
     </div>
   );
 };
