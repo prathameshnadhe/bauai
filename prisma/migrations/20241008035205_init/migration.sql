@@ -4,6 +4,7 @@ CREATE TABLE "User" (
     "name" VARCHAR(128) NOT NULL,
     "email" VARCHAR(128) NOT NULL,
     "password" TEXT NOT NULL,
+    "isAdmin" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")

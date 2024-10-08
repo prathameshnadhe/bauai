@@ -95,16 +95,22 @@ export default function Home() {
           </p>
         )}
       </div>
-      <div className="flex flex-wrap text-center mt-4 w-10/12 mx-auto my-0 justify-center">
-        {items.map((item) => (
-          <ItemCard
-            key={item.id}
-            item={item}
-            loggedInUserId={userData?.id}
-            onDelete={handleDeleteItem}
-          />
-        ))}
-      </div>
+      {items && items.length === 0 ? (
+        <div className="text-center mt-8 text-2xl">
+          No items yet. Let's get started by creating your first one!
+        </div>
+      ) : (
+        <div className="flex flex-wrap text-center mt-4 w-10/12 mx-auto my-0 justify-center">
+          {items.map((item) => (
+            <ItemCard
+              key={item.id}
+              item={item}
+              loggedInUserId={userData?.id}
+              onDelete={handleDeleteItem}
+            />
+          ))}
+        </div>
+      )}
     </>
   );
 }
